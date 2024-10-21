@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TUVIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TUVIEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CTLUAT" EntityType="TUVIModel.CTLUAT" />
+    <EntitySet Name="DACDIEM" EntityType="TUVIModel.DACDIEM" />
+    <EntitySet Name="KETLUAN" EntityType="TUVIModel.KETLUAN" />
+    <EntitySet Name="LOAIDD" EntityType="TUVIModel.LOAIDD" />
+    <EntitySet Name="LUAT" EntityType="TUVIModel.LUAT" />
+    <EntitySet Name="sysdiagrams" EntityType="TUVIModel.sysdiagrams" />
+    <AssociationSet Name="FK__CTLUAT__IDDD__4E88ABD4" Association="TUVIModel.FK__CTLUAT__IDDD__4E88ABD4">
+      <End Role="DACDIEM" EntitySet="DACDIEM" />
+      <End Role="CTLUAT" EntitySet="CTLUAT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTLUAT__MALUAT__4D94879B" Association="TUVIModel.FK__CTLUAT__MALUAT__4D94879B">
+      <End Role="LUAT" EntitySet="LUAT" />
+      <End Role="CTLUAT" EntitySet="CTLUAT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DACDIEM__IDLDD__3A81B327" Association="TUVIModel.FK__DACDIEM__IDLDD__3A81B327">
+      <End Role="LOAIDD" EntitySet="LOAIDD" />
+      <End Role="DACDIEM" EntitySet="DACDIEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LUAT__MAMENH__3D5E1FD2" Association="TUVIModel.FK__LUAT__MAMENH__3D5E1FD2">
+      <End Role="KETLUAN" EntitySet="KETLUAN" />
+      <End Role="LUAT" EntitySet="LUAT" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CTLUAT">
+    <Key>
+      <PropertyRef Name="MALUAT" />
+      <PropertyRef Name="IDDD" />
+    </Key>
+    <Property Name="MALUAT" Type="Int32" Nullable="false" />
+    <Property Name="IDDD" Type="Int32" Nullable="false" />
+    <Property Name="LIENKET" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DACDIEM" Relationship="TUVIModel.FK__CTLUAT__IDDD__4E88ABD4" FromRole="CTLUAT" ToRole="DACDIEM" />
+    <NavigationProperty Name="LUAT" Relationship="TUVIModel.FK__CTLUAT__MALUAT__4D94879B" FromRole="CTLUAT" ToRole="LUAT" />
+  </EntityType>
+  <EntityType Name="DACDIEM">
+    <Key>
+      <PropertyRef Name="IDDD" />
+    </Key>
+    <Property Name="IDDD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDLDD" Type="Int32" />
+    <Property Name="MAQUYUOC" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NDMOTA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CTLUAT" Relationship="TUVIModel.FK__CTLUAT__IDDD__4E88ABD4" FromRole="DACDIEM" ToRole="CTLUAT" />
+    <NavigationProperty Name="LOAIDD" Relationship="TUVIModel.FK__DACDIEM__IDLDD__3A81B327" FromRole="DACDIEM" ToRole="LOAIDD" />
+  </EntityType>
+  <EntityType Name="KETLUAN">
+    <Key>
+      <PropertyRef Name="MAKL" />
+    </Key>
+    <Property Name="MAKL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NDKL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MOTA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MAQUYUOC" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LUAT" Relationship="TUVIModel.FK__LUAT__MAMENH__3D5E1FD2" FromRole="KETLUAN" ToRole="LUAT" />
+  </EntityType>
+  <EntityType Name="LOAIDD">
+    <Key>
+      <PropertyRef Name="IDLDD" />
+    </Key>
+    <Property Name="IDLDD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENLOAIDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NOIDUNG" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DACDIEM" Relationship="TUVIModel.FK__DACDIEM__IDLDD__3A81B327" FromRole="LOAIDD" ToRole="DACDIEM" />
+  </EntityType>
+  <EntityType Name="LUAT">
+    <Key>
+      <PropertyRef Name="MALUAT" />
+    </Key>
+    <Property Name="MALUAT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAKL" Type="Int32" />
+    <Property Name="NDLUAT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LOIKHUYEN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CTLUAT" Relationship="TUVIModel.FK__CTLUAT__MALUAT__4D94879B" FromRole="LUAT" ToRole="CTLUAT" />
+    <NavigationProperty Name="KETLUAN" Relationship="TUVIModel.FK__LUAT__MAMENH__3D5E1FD2" FromRole="LUAT" ToRole="KETLUAN" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__CTLUAT__IDDD__4E88ABD4">
+    <End Type="TUVIModel.DACDIEM" Role="DACDIEM" Multiplicity="1" />
+    <End Type="TUVIModel.CTLUAT" Role="CTLUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DACDIEM">
+        <PropertyRef Name="IDDD" />
+      </Principal>
+      <Dependent Role="CTLUAT">
+        <PropertyRef Name="IDDD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTLUAT__MALUAT__4D94879B">
+    <End Type="TUVIModel.LUAT" Role="LUAT" Multiplicity="1" />
+    <End Type="TUVIModel.CTLUAT" Role="CTLUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LUAT">
+        <PropertyRef Name="MALUAT" />
+      </Principal>
+      <Dependent Role="CTLUAT">
+        <PropertyRef Name="MALUAT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DACDIEM__IDLDD__3A81B327">
+    <End Type="TUVIModel.LOAIDD" Role="LOAIDD" Multiplicity="0..1" />
+    <End Type="TUVIModel.DACDIEM" Role="DACDIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIDD">
+        <PropertyRef Name="IDLDD" />
+      </Principal>
+      <Dependent Role="DACDIEM">
+        <PropertyRef Name="IDLDD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LUAT__MAMENH__3D5E1FD2">
+    <End Type="TUVIModel.KETLUAN" Role="KETLUAN" Multiplicity="0..1" />
+    <End Type="TUVIModel.LUAT" Role="LUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KETLUAN">
+        <PropertyRef Name="MAKL" />
+      </Principal>
+      <Dependent Role="LUAT">
+        <PropertyRef Name="MAKL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

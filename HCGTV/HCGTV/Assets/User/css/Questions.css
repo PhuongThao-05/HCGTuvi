@@ -1,0 +1,136 @@
+﻿body{
+    background-image:url('../img/1.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+    
+}
+.note-text {
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #ff0000d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+/* Ẩn radio button mặc định */
+input[type="radio"] {
+    display: none;
+}
+
+/* Kiểu dáng cho nhãn (ô đáp án) */
+label {
+    border: 2px solid #c5d9eb;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+/* Khi radio button được chọn */
+input[type="radio"]:checked + label {
+    background-color: #c9f9d4;
+    color: black;
+    border-color: #8dd890;
+}
+
+/* Khi người dùng hover vào ô đáp án */
+label:hover {
+    background-color: #d1e8fd;
+}
+
+.slide {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #ffffffad;
+}
+
+.slide-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 100px;
+    transition: transform 0.5s ease;
+}
+
+.slide-item {
+    width: 600px;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: #eefbff;
+    text-align: center;
+    margin: auto;
+    font-size: 1.2rem;
+    font-family: math;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 80px;
+    font-size: 15px;
+    font-family: cursive;
+    height: 45px;
+    border-radius: 5px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+    .prev:disabled, .next:disabled {
+        background-color: #d0cece;
+        border: 1px solid #5a5a5a4a;
+        cursor: not-allowed;
+    }
+
+.predict {
+    margin: auto;
+    margin-top: 10px;
+    height: 50px;
+    width: 800px;
+    border: 1px solid #dcc616;
+    border-radius: 16px;
+    font-family: math;
+    font-size: 1.2rem;
+    background-color: #fff4c1;
+    cursor:pointer;
+}
+
+    .predict:hover {
+        background-color: #fbe090;
+    }
+
+.stop-ques {
+    position: relative;
+    float: right;
+    bottom: 50px;
+    right: 30px;
+    text-decoration: none;
+    font-family: fantasy;
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: font-size 0.3s ease;
+}
+.stop-ques:hover{
+    font-size:2rem;
+}

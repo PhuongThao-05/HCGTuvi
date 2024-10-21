@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TUVIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CTLUAT">
+    <Key>
+      <PropertyRef Name="MALUAT" />
+      <PropertyRef Name="IDDD" />
+    </Key>
+    <Property Name="MALUAT" Type="int" Nullable="false" />
+    <Property Name="IDDD" Type="int" Nullable="false" />
+    <Property Name="LIENKET" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DACDIEM">
+    <Key>
+      <PropertyRef Name="IDDD" />
+    </Key>
+    <Property Name="IDDD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDLDD" Type="int" />
+    <Property Name="MAQUYUOC" Type="nvarchar" MaxLength="10" />
+    <Property Name="NDMOTA" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="KETLUAN">
+    <Key>
+      <PropertyRef Name="MAKL" />
+    </Key>
+    <Property Name="MAKL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NDKL" Type="nvarchar" MaxLength="50" />
+    <Property Name="MOTA" Type="nvarchar" MaxLength="255" />
+    <Property Name="MAQUYUOC" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="LOAIDD">
+    <Key>
+      <PropertyRef Name="IDLDD" />
+    </Key>
+    <Property Name="IDLDD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENLOAIDD" Type="nvarchar" MaxLength="50" />
+    <Property Name="NOIDUNG" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LUAT">
+    <Key>
+      <PropertyRef Name="MALUAT" />
+    </Key>
+    <Property Name="MALUAT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MAKL" Type="int" />
+    <Property Name="NDLUAT" Type="nvarchar" MaxLength="50" />
+    <Property Name="LOIKHUYEN" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__CTLUAT__IDDD__4E88ABD4">
+    <End Role="DACDIEM" Type="Self.DACDIEM" Multiplicity="1" />
+    <End Role="CTLUAT" Type="Self.CTLUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DACDIEM">
+        <PropertyRef Name="IDDD" />
+      </Principal>
+      <Dependent Role="CTLUAT">
+        <PropertyRef Name="IDDD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTLUAT__MALUAT__4D94879B">
+    <End Role="LUAT" Type="Self.LUAT" Multiplicity="1" />
+    <End Role="CTLUAT" Type="Self.CTLUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LUAT">
+        <PropertyRef Name="MALUAT" />
+      </Principal>
+      <Dependent Role="CTLUAT">
+        <PropertyRef Name="MALUAT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DACDIEM__IDLDD__3A81B327">
+    <End Role="LOAIDD" Type="Self.LOAIDD" Multiplicity="0..1" />
+    <End Role="DACDIEM" Type="Self.DACDIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIDD">
+        <PropertyRef Name="IDLDD" />
+      </Principal>
+      <Dependent Role="DACDIEM">
+        <PropertyRef Name="IDLDD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LUAT__MAMENH__3D5E1FD2">
+    <End Role="KETLUAN" Type="Self.KETLUAN" Multiplicity="0..1" />
+    <End Role="LUAT" Type="Self.LUAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KETLUAN">
+        <PropertyRef Name="MAKL" />
+      </Principal>
+      <Dependent Role="LUAT">
+        <PropertyRef Name="MAKL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TUVIModelStoreContainer">
+    <EntitySet Name="CTLUAT" EntityType="Self.CTLUAT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DACDIEM" EntityType="Self.DACDIEM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KETLUAN" EntityType="Self.KETLUAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOAIDD" EntityType="Self.LOAIDD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LUAT" EntityType="Self.LUAT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CTLUAT__IDDD__4E88ABD4" Association="Self.FK__CTLUAT__IDDD__4E88ABD4">
+      <End Role="DACDIEM" EntitySet="DACDIEM" />
+      <End Role="CTLUAT" EntitySet="CTLUAT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTLUAT__MALUAT__4D94879B" Association="Self.FK__CTLUAT__MALUAT__4D94879B">
+      <End Role="LUAT" EntitySet="LUAT" />
+      <End Role="CTLUAT" EntitySet="CTLUAT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DACDIEM__IDLDD__3A81B327" Association="Self.FK__DACDIEM__IDLDD__3A81B327">
+      <End Role="LOAIDD" EntitySet="LOAIDD" />
+      <End Role="DACDIEM" EntitySet="DACDIEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LUAT__MAMENH__3D5E1FD2" Association="Self.FK__LUAT__MAMENH__3D5E1FD2">
+      <End Role="KETLUAN" EntitySet="KETLUAN" />
+      <End Role="LUAT" EntitySet="LUAT" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

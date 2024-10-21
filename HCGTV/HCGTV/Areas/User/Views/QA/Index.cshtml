@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Câu Hỏi Tử Vi";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-wide customizer-hide"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path=""
+      data-template="vertical-menu-template-free">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Dự đoán số mệnh</title>
+    <meta name="description" content="" />
+    <link rel="icon" type="image/x-icon" href="~/Assets/User/img/jollibee1.ico" />
+    <link rel="stylesheet" href="~/Assets/User/css/Questions.css" />
+    <script src="https://kit.fontawesome.com/6b8a71fb94.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="loading" class="loading-overlay" style="display:none;">
+        <div class="spinner"></div>
+    </div>
+    <h2 style="text-align: center; font-size: 2.2rem; margin-top: 20px; margin-bottom: 10px; font-family: math;">Hãy trả lời các câu hỏi sau</h2>
+    <a href="/User/Home/Index" class="stop-ques"><i class="fa-solid fa-right-from-bracket"></i>Exit</a>
+    <div id="quiz">
+        @{
+            var questions = ViewBag.Questions as List<HCGTV.Models.LOAIDD>; // Chuyển đổi ViewBag thành danh sách
+        }
+
+        @if (questions != null)
+        {
+            for (int i = 0; i < questions.Count; i++)
+            {
+                <div class="slide" id="slide-@i" style="display: @(i == 0 ? "block" : "none")">
+                    <h3 style=" text-align: center; font-size: 1.5rem; font-family: math; margin-bottom: 10px;">@questions[i].NOIDUNG</h3> <!-- Hiển thị tên câu hỏi -->
+                    <span class="note-text">*Bạn có thể bỏ qua một số câu nếu không có đáp án phù hợp</span>
+                    <form class="slide-items">
+                        @foreach (var item in questions[i].DACDIEM) // Hiển thị đáp án
+                        {
+                            <input type="radio" id="@item.IDDD" name="answer-@i" value="@item.MAQUYUOC" />
+                            <label for="@item.IDDD" class="slide-item">@item.NDMOTA </label>
+                            <br />
+                        }
+                    </form>
+                    <button type="button" class="next" onclick="nextSlide(@i)" @(i == questions.Count - 1 ? "disabled" : "")>Next</button>
+                    <button type="button" class="prev" onclick="prevSlide(@i)" @(i == 0 ? "disabled" : "")>Previous</button>
+                </div>
+            }
+            <button id="finish" class="predict" style="display: none" onclick="finish()">Hoàn tất</button>
+        }
+        else
+        {
+            <p>Không có câu hỏi nào.</p>
+        }
+    </div>
+
+    <script>
+    let currentSlide = 0;
+
+    function nextSlide(i) {
+        document.getElementById(`slide-${i}`).style.display = 'none';
+        currentSlide++;
+        document.getElementById(`slide-${currentSlide}`).style.display = 'block';
+        document.getElementById('finish').style.display = currentSlide === @ViewBag.Questions.Count - 1 ? 'block' : 'none';
+    }
+
+    function prevSlide(i) {
+        document.getElementById(`slide-${i}`).style.display = 'none';
+        currentSlide--;
+        document.getElementById(`slide-${currentSlide}`).style.display = 'block';
+        document.getElementById('finish').style.display = currentSlide === @ViewBag.Questions.Count - 1 ? 'block' : 'none';
+    }
+        let lastChecked = null;
+
+        document.querySelectorAll('input[name^="answer-"]').forEach(function (radio) {
+            radio.addEventListener('click', function (e) {
+                if (lastChecked === this) {
+                    this.checked = false;
+                    lastChecked = null; 
+                } else {
+                    lastChecked = this;
+                }
+            });
+        });
+
+    function finish() {
+        let answers = '';
+        for (let i = 0; i < @ViewBag.Questions.Count; i++) {
+            let answer = document.querySelector(`input[name="answer-${i}"]:checked`);
+            if (answer) {
+                answers += answer.value + '^';
+            }
+        }
+        console.log(answers);
+        if (!answers || answers.length < 12) {
+            alert("Không đủ dữ liệu để dự đoán. Vui lòng trả lời tối thiểu 4 câu hỏi.");
+            return; // Dừng thực hiện hàm nếu không đủ dữ liệu
+        }
+
+        answers = answers.slice(0, -1); // Xóa ký tự cuối cùng
+
+        // Gửi chuỗi đáp án đến server
+        fetch('@Url.Action("LuuLuaChon", "QA")', {
+            method: 'POST',
+            body: JSON.stringify({ answers: answers }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            return response.text();
+        }).then(data => {
+            document.getElementById('loading').style.display = 'flex';
+            setTimeout(function () {
+                document.body.innerHTML = data; // Hiển thị kết quả
+            }, 1000); 
+        });
+        }
+    </script>
+    <style>
+        #loading {
+            display: none; /* Ban đầu ẩn spinner */
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</body>
+</html>

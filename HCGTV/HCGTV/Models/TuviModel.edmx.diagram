@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a420f6accd314a1fa9bf7e308b927798" Name="Diagram1">
+        <EntityTypeShape EntityType="TUVIModel.CTLUAT" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="TUVIModel.DACDIEM" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="TUVIModel.KETLUAN" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="TUVIModel.LOAIDD" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="TUVIModel.LUAT" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="TUVIModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" />
+        <AssociationConnector Association="TUVIModel.FK__CTLUAT__IDDD__4E88ABD4" />
+        <AssociationConnector Association="TUVIModel.FK__CTLUAT__MALUAT__4D94879B" />
+        <AssociationConnector Association="TUVIModel.FK__DACDIEM__IDLDD__3A81B327" />
+        <AssociationConnector Association="TUVIModel.FK__LUAT__MAMENH__3D5E1FD2" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
